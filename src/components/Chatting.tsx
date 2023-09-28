@@ -39,7 +39,14 @@ export const Chatting = () => {
     ],
   })
 
-  //input이 submit되면 스크롤이 내려감
+  //local storage용
+  useEffect(() => {
+    //local storage load
+    const Chattings = localStorage.getItem('chatData')
+    if (Chattings) setChatData(JSON.parse(Chattings))
+  }, [])
+
+  //input이 submit되면 스크롤이 내려감, localStorage에 저장
   useEffect(() => {
     const element = chatListRef.current
     if (element) {
@@ -79,34 +86,41 @@ export const Chatting = () => {
 
   const getCurrentTimeString = (): string => {
     const date = new Date()
-    return `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
+    let timeUnit = date.getHours() < 12 ? 'AM' : 'PM'
+    let Hours = date.getHours() < 12 ? date.getHours() : date.getHours() - 12
+
+    return `${String(Hours).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}${timeUnit}`
   }
 
   const createChatting = (inputValue: string): void => {
-    setChatData((prevChats: ChatElm) => ({
-      ...prevChats,
-      chat: [
-        ...prevChats.chat,
-        {
-          c_id: prevChats.chat[prevChats.chat.length - 1].c_id + 1,
-          from: user,
-          content: inputValue,
-          time: getCurrentTimeString(),
-        },
-      ],
-    })) //채팅리스트에 Input 추가
+    setChatData((prevChats: ChatElm) => {
+      const newChatData = {
+        ...prevChats,
+        chat: [
+          ...prevChats.chat,
+          {
+            c_id: prevChats.chat[prevChats.chat.length - 1].c_id + 1,
+            from: user,
+            content: inputValue,
+            time: getCurrentTimeString(),
+          },
+        ],
+      }
+      localStorage.setItem('chatData', JSON.stringify(newChatData))
+
+      return newChatData
+    }) //채팅리스트에 Input 추가
   }
 
   //간단하게 user 변경
   const changeUser = (): void => {
-    changeOps()
-    if (user == '코카콜라맛있다') setUser('얼음땡만하는사람')
-    else setUser('코카콜라맛있다')
-  }
-
-  const changeOps = (): void => {
-    if (nowChatting == '코카콜라맛있다') setNowChatting('얼음땡만하는사람')
-    else setNowChatting('코카콜라맛있다')
+    if (user == '코카콜라맛있다') {
+      setUser('얼음땡만하는사람')
+      setNowChatting('코카콜라맛있다')
+    } else {
+      setUser('코카콜라맛있다')
+      setNowChatting('얼음땡만하는사람')
+    }
   }
 
   return (
@@ -132,7 +146,7 @@ export const Chatting = () => {
                   <MyChatContainer>
                     <ChattingBox1>{chat.content}</ChattingBox1>
                   </MyChatContainer>
-                  <ChatTime>07:40AM</ChatTime>
+                  <ChatTime>{chat.time}</ChatTime>
                 </MyChatList>
               ) : (
                 <FriendContainer>
@@ -142,7 +156,7 @@ export const Chatting = () => {
                       <FriendName>{nowChatting}</FriendName>
                       <ChattingBox2>{chat.content}</ChattingBox2>
                     </FriendChatContainer>
-                    <ChatTime>08:21AM</ChatTime>
+                    <ChatTime>{chat.time}</ChatTime>
                   </FriendChatList>
                 </FriendContainer>
               ),
@@ -165,7 +179,20 @@ export const Chatting = () => {
               onChange={onChange}
               onClick={handleInputClick}
             />
-            <AirplainIcon src={imgPath.path[3]} />
+            <button
+              type="submit"
+              style={{
+                border: 'none',
+                backgroundColor: 'transparent',
+                width: 24,
+                height: 24,
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <AirplainIcon src={imgPath.path[3]} />
+            </button>
           </InputContainer>
         </ChatArea>
         <SafeAreaImg src={imgPath.path[6]} />
