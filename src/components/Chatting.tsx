@@ -43,9 +43,11 @@ export const Chatting = () => {
   useEffect(() => {
     //local storage load
     const Chattings = localStorage.getItem('chatData')
-    if (Chattings) setChatData(JSON.parse(Chattings))
+    if (Chattings) {
+      setChatData(JSON.parse(Chattings))
+      setIsChatOn(true)
+    }
     //chatData가 비었을 땐 메세지 없음 화면이 나오도록
-    if (chatData) setIsChatOn(true)
   }, [])
 
   //input이 submit되면 스크롤이 내려감, localStorage에 저장
@@ -86,6 +88,7 @@ export const Chatting = () => {
     [inputValue],
   )
 
+  //시간 함수
   const getCurrentTimeString = (): string => {
     const date = new Date()
     let timeUnit = date.getHours() < 12 ? 'AM' : 'PM'
@@ -97,6 +100,7 @@ export const Chatting = () => {
   const createChatting = (inputValue: string): void => {
     setChatData((prevChats: ChatElm) => {
       const newChatData = {
+        //localStorage 저장을 위해 분리
         ...prevChats,
         chat: [
           ...prevChats.chat,
@@ -109,6 +113,9 @@ export const Chatting = () => {
         ],
       }
       localStorage.setItem('chatData', JSON.stringify(newChatData))
+
+      //채팅 추가되면서 chat on, 이 후 삭제할 경우도 고려가능
+      setIsChatOn(newChatData.chat.length > 0)
 
       return newChatData
     }) //채팅리스트에 Input 추가
@@ -136,7 +143,7 @@ export const Chatting = () => {
           <BackIcon src={imgPath.path[1]} onClick={changeUser} />
           <UserNameBox>
             <UserName>{nowChatting}</UserName>
-            <GreenCircle />
+            {isChatOn && <GreenCircle />}
           </UserNameBox>
           <DotsIcon src={imgPath.path[7]} />
         </UserContainer>
@@ -146,8 +153,9 @@ export const Chatting = () => {
           {chatData.chat
             .filter((chat) => chat.c_id !== 0)
             .map((chat, index, arr) => {
-              //만약 그 전 시간과 같다면 그 전에서 시간이 안 보이게하고 마지막에만 보이도록
-              const showTime = index === arr.length - 1 || chat.time !== arr[index + 1].time
+              //만약 그 전 채팅시간과 같다면 그 전 채팅시간이 사라지고 마지막 채팅에만 보이도록
+              const showTime =
+                index === arr.length - 1 || chat.time !== arr[index + 1].time || chat.from !== arr[index + 1].from
 
               return chat.from === user ? (
                 <MyChatList>
