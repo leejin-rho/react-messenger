@@ -78,7 +78,7 @@ export const Chatting = () => {
 
       //입력한 값이 없을 때 alert 추가
       if (inputValue.trim() == '') {
-        alert('할일을 입력해주세요.')
+        alert('채팅을 입력해주세요.')
       } else {
         createChatting(inputValue)
         setInputValue('')
