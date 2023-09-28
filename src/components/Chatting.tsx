@@ -132,8 +132,8 @@ export const Chatting = () => {
     }
   }
 
-  //좋아요 기능
-  const giveHeart = (): void => {}
+  // //좋아요 기능
+  // const giveHeart = (): void => {}
 
   return (
     <ChattingContainer>
