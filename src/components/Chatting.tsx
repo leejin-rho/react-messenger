@@ -229,7 +229,7 @@ const ChattingContainer = styled.div`
 const TopHeadiing = styled.div`
   display: flex;
   flex-direction: column;
-  height: 88px;
+  height: 5.5rem;
   width: 100%;
   align-items: center;
   justify-content: center;
@@ -237,10 +237,11 @@ const TopHeadiing = styled.div`
 
 const UserContainer = styled.div`
   display: flex;
-  width: 335px;
-  height: 24px;
+  width: 21rem;
+  height: 1.5rem;
   justify-content: space-between;
-  margin: 0px 20px 16px 20px;
+  align-items: center;
+  margin: 0rem 1.25rem 0.9rem 1.25rem;
 `
 
 const UserNameBox = styled.div`
@@ -290,9 +291,9 @@ const BottomBox = styled.div`
 const ChattingList = styled.div`
   display: flex;
   flex-direction: column;
-  height: 630px;
+  height: 40rem;
   width: 100%;
-  padding: 0px 20px 0px 20px;
+  padding: 0rem 1.25rem 0rem 1.25rem;
   overflow: auto;
   &::-webkit-scrollbar {
     display: none;
@@ -309,8 +310,8 @@ const NoChatText = styled.div`
   font-family: 'Pretendard-SemiBold';
   font-size: 20px;
   font-style: normal;
-  line-height: 28px;
-  width: 206px;
+  line-height: 140%;
+  width: 12.875rem;
 `
 
 const NoChatImg = styled.img`
@@ -338,7 +339,7 @@ const ChattingBox1 = styled.span`
   max-width: 16rem;
   background-color: ${colors.purple};
   border-radius: 0.6rem;
-  padding: 12px 10px 12px 10px;
+  padding: 0.63rem 0.75rem 0.63rem 0.75rem;
   color: ${colors.white};
   line-height: 120%;
   font-family: 'Pretendard-Light';
@@ -359,10 +360,10 @@ const FriendContainer = styled.div`
 `
 
 const ProfileImg = styled.img`
-  width: 50px;
-  height: 50px;
+  width: 3.125rem;
+  height: 3.125rem;
   border-radius: 50px;
-  margin-right: 8px;
+  margin-right: 0.5rem;
 `
 
 const FriendChatContainer = styled.div`
@@ -382,7 +383,7 @@ const FriendName = styled.span`
 const ChattingBox2 = styled.span`
   background-color: ${colors.white};
   border-radius: 0.6rem;
-  padding: 12px 10px 12px 10px;
+  padding: 0.63rem 0.75rem 0.63rem 0.75rem;
   color: ${colors.grey_900};
   max-width: 20rem;
   width: fit-content;
