@@ -376,6 +376,7 @@ const FriendName = styled.span`
   font-family: 'Pretendard';
   font-size: 14px;
   line-height: 120%; /* 16.8px */
+  margin-bottom: 0.5rem;
 `
 
 const ChattingBox2 = styled.span`
