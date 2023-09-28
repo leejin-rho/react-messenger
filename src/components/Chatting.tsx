@@ -19,7 +19,7 @@ export const Chatting = () => {
     }[]
   }
 
-  const [isChatOn, setIsChatOn] = useState<boolean>(true)
+  const [isChatOn, setIsChatOn] = useState<boolean>(false)
   const [nowChatting, setNowChatting] = useState<string>('얼음땡만하는사람')
   const [user, setUser] = useState<string>('코카콜라맛있다')
   const [inputValue, setInputValue] = useState<string>('')
@@ -44,6 +44,8 @@ export const Chatting = () => {
     //local storage load
     const Chattings = localStorage.getItem('chatData')
     if (Chattings) setChatData(JSON.parse(Chattings))
+    //chatData가 비었을 땐 메세지 없음 화면이 나오도록
+    if (chatData) setIsChatOn(true)
   }, [])
 
   //input이 submit되면 스크롤이 내려감, localStorage에 저장
@@ -114,7 +116,7 @@ export const Chatting = () => {
 
   //간단하게 user 변경
   const changeUser = (): void => {
-    if (user == '코카콜라맛있다') {
+    if (user === '코카콜라맛있다') {
       setUser('얼음땡만하는사람')
       setNowChatting('코카콜라맛있다')
     } else {
@@ -122,6 +124,9 @@ export const Chatting = () => {
       setNowChatting('얼음땡만하는사람')
     }
   }
+
+  //좋아요 기능
+  const giveHeart = (): void => {}
 
   return (
     <ChattingContainer>
@@ -140,27 +145,30 @@ export const Chatting = () => {
         <ChattingList ref={chatListRef}>
           {chatData.chat
             .filter((chat) => chat.c_id !== 0)
-            .map((chat) =>
-              chat.from == user ? (
+            .map((chat, index, arr) => {
+              //만약 그 전 시간과 같다면 그 전에서 시간이 안 보이게하고 마지막에만 보이도록
+              const showTime = index === arr.length - 1 || chat.time !== arr[index + 1].time
+
+              return chat.from === user ? (
                 <MyChatList>
                   <MyChatContainer>
                     <ChattingBox1>{chat.content}</ChattingBox1>
                   </MyChatContainer>
-                  <ChatTime>{chat.time}</ChatTime>
+                  {showTime ? <ChatTime>{chat.time}</ChatTime> : null}
                 </MyChatList>
               ) : (
                 <FriendContainer>
-                  <ProfileImg src={nowChatting == '얼음땡만하는사람' ? imgPath.path[4] : imgPath.path[5]}></ProfileImg>
+                  <ProfileImg src={nowChatting === '얼음땡만하는사람' ? imgPath.path[4] : imgPath.path[5]}></ProfileImg>
                   <FriendChatList>
                     <FriendChatContainer>
                       <FriendName>{nowChatting}</FriendName>
                       <ChattingBox2>{chat.content}</ChattingBox2>
                     </FriendChatContainer>
-                    <ChatTime>{chat.time}</ChatTime>
+                    {showTime ? <ChatTime>{chat.time}</ChatTime> : null}
                   </FriendChatList>
                 </FriendContainer>
-              ),
-            )}
+              )
+            })}
         </ChattingList>
       ) : (
         <NoChattingList>
@@ -308,7 +316,6 @@ const MyChatList = styled.div`
   flex-direction: column;
   align-items: flex-end;
   width: 100%;
-  margin-bottom: 10px;
 `
 
 const MyChatContainer = styled.div`
@@ -322,7 +329,7 @@ const ChattingBox1 = styled.span`
   width: fit-content;
   max-width: 16rem;
   background-color: ${colors.purple};
-  border-radius: 10px;
+  border-radius: 0.6rem;
   padding: 12px 10px 12px 10px;
   color: ${colors.white};
   line-height: 120%;
@@ -334,7 +341,7 @@ const FriendChatList = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  margin-bottom: 10px;
+  margin-bottom: 0.6rem;
 `
 
 const FriendContainer = styled.div`
@@ -365,7 +372,7 @@ const FriendName = styled.span`
 
 const ChattingBox2 = styled.span`
   background-color: ${colors.white};
-  border-radius: 10px;
+  border-radius: 0.6rem;
   padding: 12px 10px 12px 10px;
   color: ${colors.grey_900};
   max-width: 20rem;
@@ -380,6 +387,7 @@ const ChatTime = styled.span`
   font-family: 'Pretendard-Light';
   font-size: 14px;
   line-height: 120%; /* 16.8px */
+  margin-bottom: 0.6rem;
 `
 
 const SafeAreaImg = styled.img`
