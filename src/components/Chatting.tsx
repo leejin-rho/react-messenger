@@ -20,11 +20,14 @@ export const Chatting = () => {
   }
 
   const [isChatOn, setIsChatOn] = useState<boolean>(true)
+  const [nowChatting, setNowChatting] = useState<string>('얼음땡만하는사람')
+  const [user, setUser] = useState<string>('코카콜라맛있다')
   const [inputValue, setInputValue] = useState<string>('')
   const inputRef = useRef<HTMLInputElement>(null)
+  const chatListRef = useRef<HTMLDivElement>(null)
   const [chatData, setChatData] = useState<ChatElm>({
     id: 0,
-    name: '',
+    name: '얼음땡만하는사람',
     img: '',
     chat: [
       {
@@ -35,6 +38,14 @@ export const Chatting = () => {
       },
     ],
   })
+
+  //input이 submit되면 스크롤이 내려감
+  useEffect(() => {
+    const element = chatListRef.current
+    if (element) {
+      element.scrollTop = element.scrollHeight
+    }
+  }, [chatData])
 
   //input 함수
   //onChange
@@ -58,57 +69,84 @@ export const Chatting = () => {
       if (inputValue.trim() == '') {
         alert('할일을 입력해주세요.')
       } else {
+        createChatting(inputValue)
         setInputValue('')
-        console.log(inputValue)
+        console.log(chatData)
       }
     },
     [inputValue],
   )
+
+  const getCurrentTimeString = (): string => {
+    const date = new Date()
+    return `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
+  }
+
+  const createChatting = (inputValue: string): void => {
+    setChatData((prevChats: ChatElm) => ({
+      ...prevChats,
+      chat: [
+        ...prevChats.chat,
+        {
+          c_id: prevChats.chat[prevChats.chat.length - 1].c_id + 1,
+          from: user,
+          content: inputValue,
+          time: getCurrentTimeString(),
+        },
+      ],
+    })) //채팅리스트에 Input 추가
+  }
+
+  //간단하게 user 변경
+  const changeUser = (): void => {
+    changeOps()
+    if (user == '코카콜라맛있다') setUser('얼음땡만하는사람')
+    else setUser('코카콜라맛있다')
+  }
+
+  const changeOps = (): void => {
+    if (nowChatting == '코카콜라맛있다') setNowChatting('얼음땡만하는사람')
+    else setNowChatting('코카콜라맛있다')
+  }
 
   return (
     <ChattingContainer>
       <TopHeadiing>
         <SafeAreaImg src={imgPath.path[0]} />
         <UserContainer>
-          <BackIcon src={imgPath.path[1]} />
+          <BackIcon src={imgPath.path[1]} onClick={changeUser} />
           <UserNameBox>
-            <UserName>얼음땡만하는사람</UserName>
+            <UserName>{nowChatting}</UserName>
             <GreenCircle />
           </UserNameBox>
           <DotsIcon src={imgPath.path[7]} />
         </UserContainer>
       </TopHeadiing>
       {isChatOn ? (
-        <ChattingList>
-          <MyChatList>
-            <MyChatContainer>
-              <ChattingBox1>
-                모든 국민은 종교의 자유를 가진다. 대통령은 전시·사변 또는 이에 준하는 국가비상사태에 있어서모든 국민은
-                종교의 자유를 가진다. 대통령은 전시·사변 또는 이에 준하는 국가비상사태에 있어서 병력으로써 군사상의
-                필요에 응하거나 공공의 안녕질서를 유지할 필요가 있을 때에는 법률이 정하는 바에 의하여 계엄을 선포할 수
-                있다.법률이 정하는 바에 의하여 계엄을 선포할 수 있다.
-              </ChattingBox1>
-              <ChattingBox1>모든 국민은 종교의 자유를 가진다. 대통령은 전시·사변 또는 이에 준하는</ChattingBox1>
-              <ChattingBox1>모든 국민은 법률이 </ChattingBox1>
-              <ChattingBox1>안녕</ChattingBox1>
-            </MyChatContainer>
-            <ChatTime>07:40AM</ChatTime>
-          </MyChatList>
-          <FriendContainer>
-            <ProfileImg src={imgPath.path[4]}></ProfileImg>
-            <FriendChatList>
-              <FriendChatContainer>
-                <FriendName>얼음땡만하는사람</FriendName>
-                <ChattingBox2>
-                  국회는 국무총리 또는 국무위원의 해임을 대통령에게 건의할 수 있다. 공무원의 신분과 정치적 중립성은
-                  법률이
-                </ChattingBox2>
-                <ChattingBox2>응 안녕</ChattingBox2>
-                <ChattingBox2>왜</ChattingBox2>
-              </FriendChatContainer>
-              <ChatTime>08:21AM</ChatTime>
-            </FriendChatList>
-          </FriendContainer>
+        <ChattingList ref={chatListRef}>
+          {chatData.chat
+            .filter((chat) => chat.c_id !== 0)
+            .map((chat) =>
+              chat.from == user ? (
+                <MyChatList>
+                  <MyChatContainer>
+                    <ChattingBox1>{chat.content}</ChattingBox1>
+                  </MyChatContainer>
+                  <ChatTime>07:40AM</ChatTime>
+                </MyChatList>
+              ) : (
+                <FriendContainer>
+                  <ProfileImg src={nowChatting == '얼음땡만하는사람' ? imgPath.path[4] : imgPath.path[5]}></ProfileImg>
+                  <FriendChatList>
+                    <FriendChatContainer>
+                      <FriendName>{nowChatting}</FriendName>
+                      <ChattingBox2>{chat.content}</ChattingBox2>
+                    </FriendChatContainer>
+                    <ChatTime>08:21AM</ChatTime>
+                  </FriendChatList>
+                </FriendContainer>
+              ),
+            )}
         </ChattingList>
       ) : (
         <NoChattingList>
