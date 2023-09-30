@@ -293,7 +293,7 @@ const ChattingList = styled.div`
   flex-direction: column;
   height: 40rem;
   width: 100%;
-  padding: 0rem 1.25rem 0rem 1.25rem;
+  padding: 0rem 1.25rem;
   overflow: auto;
   &::-webkit-scrollbar {
     display: none;
