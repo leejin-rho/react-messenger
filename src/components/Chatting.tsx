@@ -154,7 +154,7 @@ export const Chatting = () => {
             .filter((chat) => chat.c_id !== 0)
             .map((chat, index, arr) => {
               //만약 그 전 채팅시간과 같다면 그 전 채팅시간이 사라지고 마지막 채팅에만 보이도록
-              const showTime =
+              const showTime: boolean =
                 index === arr.length - 1 || chat.time !== arr[index + 1].time || chat.from !== arr[index + 1].from
 
               return chat.from === user ? (
