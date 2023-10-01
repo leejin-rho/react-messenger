@@ -344,6 +344,20 @@ const ChattingBox1 = styled.span`
   line-height: 120%;
   font-family: 'Pretendard-Light';
   margin-bottom: 8px;
+  word-break: break-all;
+`
+
+const ChattingBox2 = styled.span`
+  background-color: ${colors.white};
+  border-radius: 0.6rem;
+  padding: 0.63rem 0.75rem 0.63rem 0.75rem;
+  color: ${colors.grey_900};
+  max-width: 20rem;
+  width: fit-content;
+  line-height: 120%;
+  font-family: 'Pretendard-Light';
+  margin-bottom: 8px;
+  word-break: break-all;
 `
 
 const FriendChatList = styled.div`
@@ -378,18 +392,6 @@ const FriendName = styled.span`
   font-size: 14px;
   line-height: 120%; /* 16.8px */
   margin-bottom: 0.5rem;
-`
-
-const ChattingBox2 = styled.span`
-  background-color: ${colors.white};
-  border-radius: 0.6rem;
-  padding: 0.63rem 0.75rem 0.63rem 0.75rem;
-  color: ${colors.grey_900};
-  max-width: 20rem;
-  width: fit-content;
-  line-height: 120%;
-  font-family: 'Pretendard-Light';
-  margin-bottom: 8px;
 `
 
 const ChatTime = styled.span`
