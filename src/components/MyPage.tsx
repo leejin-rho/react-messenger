@@ -1,11 +1,14 @@
 import styled from 'styled-components'
 import { colors } from '../style/colors'
+
 import { useState } from 'react'
 
-export const FriendList = () => {
+export const MyPage = () => {
+  //const [isChatList, setIsChatList] = useState(false)
+
   return (
     <TopHeading>
-      <TitleText> 얼음땡만하는 사람 </TitleText>
+      <TitleText> 설정 </TitleText>
     </TopHeading>
   )
 }
@@ -18,7 +21,10 @@ const TopHeading = styled.div`
   align-items: center;
   justify-content: center;
 `
-
+// const TitleBox = styled.div`
+//   width: 335px;
+//   height: 24px;
+// `
 const TitleText = styled.span`
   font-size: 22px;
 `

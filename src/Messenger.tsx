@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { colors } from './style/colors'
 import { Chatting } from './components/Chatting'
 import { FriendList } from './components/FriendList'
+import { TapBar } from './components/TapBar'
 import { imgPath } from './style/imgPath'
 
 const Messenger = () => {
@@ -10,7 +11,8 @@ const Messenger = () => {
     <Container>
       <SafeAreaImg src={imgPath.path[0]} isTop={true} />
       {/* <Chatting /> */}
-      <FriendList />
+      {/* <FriendList /> */}
+      <TapBar />
       <SafeAreaImg src={imgPath.path[6]} isTop={false} />
     </Container>
   )

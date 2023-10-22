@@ -253,13 +253,12 @@ const UserNameBox = styled.div`
 
 const UserName = styled.span`
   color: ${colors.grey_900};
-  font-family: Pretendard;
   font-size: 20px;
   font-style: normal;
   font-weight: 600;
   line-height: 28px;
   margin-left: 11px;
-  font-family: Pretendard-Regular;
+  font-family: 'Pretendard-Regular';
 `
 
 const GreenCircle = styled.div`
