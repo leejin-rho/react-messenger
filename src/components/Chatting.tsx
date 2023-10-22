@@ -137,8 +137,8 @@ export const Chatting = () => {
 
   return (
     <ChattingContainer>
-      <TopHeadiing>
-        <SafeAreaImg src={imgPath.path[0]} />
+      <TopHeading>
+        {/* <SafeAreaImg src={imgPath.path[0]} /> */}
         <UserContainer>
           <BackIcon src={imgPath.path[1]} onClick={changeUser} />
           <UserNameBox>
@@ -147,7 +147,7 @@ export const Chatting = () => {
           </UserNameBox>
           <DotsIcon src={imgPath.path[7]} />
         </UserContainer>
-      </TopHeadiing>
+      </TopHeading>
       {isChatOn ? (
         <ChattingList ref={chatListRef}>
           {chatData.chat
@@ -211,7 +211,7 @@ export const Chatting = () => {
             </button>
           </InputContainer>
         </ChatArea>
-        <SafeAreaImg src={imgPath.path[6]} />
+        {/* <SafeAreaImg src={imgPath.path[6]} /> */}
       </BottomBox>
     </ChattingContainer>
   )
@@ -226,10 +226,10 @@ const ChattingContainer = styled.div`
   width: 100%;
 `
 
-const TopHeadiing = styled.div`
+const TopHeading = styled.div`
   display: flex;
   flex-direction: column;
-  height: 5.5rem;
+  height: 2.3;
   width: 100%;
   align-items: center;
   justify-content: center;
@@ -283,7 +283,7 @@ const BottomBox = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 94px;
+  height: 60px;
   justify-content: center;
   align-items: center;
   background-color: ${colors.white};
@@ -402,9 +402,9 @@ const ChatTime = styled.span`
   margin-bottom: 0.6rem;
 `
 
-const SafeAreaImg = styled.img`
-  width: 100%;
-`
+// const SafeAreaImg = styled.img`
+//   width: 100%;
+// `
 
 const ChatArea = styled.div`
   display: flex;
