@@ -1,24 +1,48 @@
 import styled from 'styled-components'
 import { colors } from '../style/colors'
 import { useState } from 'react'
+import { imgPath } from '../style/imgPath'
+import { ReactComponent as ArrowIcon } from '../assets/svgs/arrow.svg'
 
 export const FriendList = () => {
   return (
-    <TopHeading>
-      <TitleText> 얼음땡만하는 사람 </TitleText>
-    </TopHeading>
+    <FriendContainer>
+      <FriendBox>
+        <Profile src={imgPath.path[4]} />
+        <FriendName>얼음땡만하는사람</FriendName>
+        <ArrowIcon style={{}} />
+      </FriendBox>
+    </FriendContainer>
   )
 }
 
-const TopHeading = styled.div`
+const FriendContainer = styled.div`
   display: flex;
-  flex-direction: column;
-  height: 2.3;
-  width: 100%;
-  align-items: center;
   justify-content: center;
+  width: 100%;
+  height: 54.2rem;
+  background-color: ${colors.grey_50};
 `
 
-const TitleText = styled.span`
-  font-size: 22px;
+const FriendBox = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0rem 1.25rem 0rem 1.25rem;
+  width: 100%;
+  height: 4.375rem;
+  background-color: ${colors.grey_50};
+`
+const Profile = styled.img`
+  width: 3.125rem;
+  height: 3.125rem;
+  border-radius: 3.125rem;
+  margin-right: 0.63rem;
+`
+const FriendName = styled.span`
+  color: ${colors.grey_700};
+  font-family: 'Pretendard-Medium';
+  font-size: 1.125rem;
+  line-height: 1.575rem;
+  width: 16.5rem;
 `
