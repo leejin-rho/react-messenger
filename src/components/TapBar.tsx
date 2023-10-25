@@ -14,7 +14,7 @@ import { ReactComponent as SearchIcon } from '../assets/svgs/search.svg'
 export const TapBar = () => {
   const inputRef = useRef<HTMLInputElement>(null)
   const [isFriend, setIsFriend] = useState(true)
-  const [isChatList, setIsChatList] = useState(false)
+  const [isChatList, setIsChatting] = useState(false)
   const [isSetting, setIsSetting] = useState(false)
   const [inputValue, setInputValue] = useState<string>('')
 
@@ -85,15 +85,33 @@ export const TapBar = () => {
       {isFriend ? <FriendList /> : <ChatList />}
 
       <TapContainer>
-        <IconBox>
+        <IconBox
+          onClick={() => {
+            setIsChatting(true)
+            setIsFriend(false)
+            setIsSetting(false)
+          }}
+        >
           <ChattingIcon style={{ color: isChatList ? colors.purple : colors.grey_400, width: '1.75rem' }} />
           <IconText style={{ color: isChatList ? colors.purple : colors.grey_400 }}>채팅</IconText>
         </IconBox>
-        <IconBox>
+        <IconBox
+          onClick={() => {
+            setIsChatting(false)
+            setIsFriend(true)
+            setIsSetting(false)
+          }}
+        >
           <FriendsIcon style={{ color: isFriend ? colors.purple : colors.grey_400, width: '1.75rem' }} />
           <IconText style={{ color: isFriend ? colors.purple : colors.grey_400 }}>친구들</IconText>
         </IconBox>
-        <IconBox>
+        <IconBox
+          onClick={() => {
+            setIsChatting(false)
+            setIsFriend(false)
+            setIsSetting(true)
+          }}
+        >
           <SettingIcon style={{ color: isSetting ? colors.purple : colors.grey_400, width: '1.75rem' }} />
           <IconText style={{ color: isSetting ? colors.purple : colors.grey_400 }}>설정</IconText>
         </IconBox>
