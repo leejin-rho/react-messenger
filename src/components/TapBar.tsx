@@ -45,30 +45,29 @@ export const TapBar = () => {
 
   return (
     <>
+      <TopHeading>
+        <UserContainer>
+          <EditIcon style={{ width: '1.9rem', color: isSetting ? colors.white : colors.grey_700 }} />
+          <TitleText style={{ color: isSetting ? colors.white : colors.grey_900 }}>
+            {isFriend ? '친구들' : isSetting ? '내 설정' : '채팅'}
+          </TitleText>
+          <WriteIcon style={{ color: isSetting ? 'transparent' : colors.grey_900, width: '1.5rem' }} />
+        </UserContainer>
+      </TopHeading>
       {!isSetting ? (
-        <TopHeading>
-          <UserContainer>
-            <EditIcon style={{ width: '1.9rem' }} />
-            <TitleText> {isFriend ? '친구들' : '채팅'}</TitleText>
-            <WriteIcon style={{ width: '1.5rem' }} />
-          </UserContainer>
-        </TopHeading>
-      ) : (
-        <UserContainer></UserContainer>
-      )}
-
-      <InputContainer onSubmit={onSubmit}>
-        <InputLine>
-          <SearchIcon style={{ width: '1.5rem' }} />
-          <InputBox
-            placeholder="검색"
-            ref={inputRef}
-            value={inputValue}
-            onChange={onChange}
-            onClick={handleInputClick}
-          />
-        </InputLine>
-        {/* <button
+        <>
+          <InputContainer onSubmit={onSubmit}>
+            <InputLine>
+              <SearchIcon style={{ width: '1.5rem' }} />
+              <InputBox
+                placeholder="검색"
+                ref={inputRef}
+                value={inputValue}
+                onChange={onChange}
+                onClick={handleInputClick}
+              />
+            </InputLine>
+            {/* <button
           type="submit"
           style={{
             border: 'none',
@@ -80,9 +79,12 @@ export const TapBar = () => {
             alignItems: 'center',
           }}
         ></button> */}
-      </InputContainer>
-
-      {isFriend ? <FriendList /> : <ChatList />}
+          </InputContainer>
+          {isFriend ? <FriendList /> : <ChatList />}
+        </>
+      ) : (
+        <MyPage />
+      )}
 
       <TapContainer>
         <IconBox
@@ -136,6 +138,7 @@ const UserContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   margin: 0rem 1.25rem 0.9rem 1.25rem;
+  z-index: 1;
 `
 
 const TitleText = styled.span`

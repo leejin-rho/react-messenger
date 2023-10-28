@@ -3,26 +3,13 @@ import { colors } from '../style/colors'
 import { useState } from 'react'
 
 export const ChatList = () => {
-
-  return (
-    <TopHeading>
-      <TitleText> 채팅 </TitleText>
-    </TopHeading>
-  )
+  return <ChatContainer></ChatContainer>
 }
 
-const TopHeading = styled.div`
+const ChatContainer = styled.div`
   display: flex;
-  flex-direction: column;
-  height: 2.3;
-  width: 100%;
-  align-items: center;
   justify-content: center;
-`
-// const TitleBox = styled.div`
-//   width: 335px;
-//   height: 24px;
-// `
-const TitleText = styled.span`
-  font-size: 22px;
+  width: 100%;
+  height: 54.2rem;
+  background-color: ${colors.grey_50};
 `
