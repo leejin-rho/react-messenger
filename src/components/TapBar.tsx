@@ -192,7 +192,7 @@ const InputBox = styled.input`
 const TapContainer = styled.div`
   display: flex;
   flex-direction: row;
-  padding: 0.56rem 3rem 0rem 3rem;
+  padding-top: 0.56rem;
   justify-content: space-between;
   height: 4rem;
   width: 100%;
@@ -204,7 +204,8 @@ const IconBox = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 3.125rem;
+  width: 7.8125rem;
+  height: 3rem;
 `
 
 const IconText = styled.div`

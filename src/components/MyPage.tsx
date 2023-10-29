@@ -18,10 +18,10 @@ export const MyPage = () => {
           <ProfileImg src={imgPath.profile[0]} />
           <TextBox>
             <NameBox>
-              <ProfileName>소혜린</ProfileName>
+              <ProfileName>노이진</ProfileName>
               <PencilIcon />
             </NameBox>
-            <ProfileEmail>hnkang00@gmail.com</ProfileEmail>
+            <ProfileEmail>tbdpapdl@gmail.com</ProfileEmail>
           </TextBox>
         </ProfileBox>
         <SNSBox>
