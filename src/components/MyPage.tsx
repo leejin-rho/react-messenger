@@ -11,9 +11,9 @@ export const MyPage = () => {
 
   return (
     <>
-      <StatusBar src={imgPath.path[10]} />
-      <BackgroundImg src={imgPath.path[9]} />
-      <ChatContainer>
+      <StatusBar src={imgPath.path[1]} />
+      <BackgroundImg src={imgPath.path[8]} />
+      <MyPageContainer>
         <ProfileBox>
           <ProfileImg src={imgPath.profile[0]} />
           <TextBox>
@@ -28,7 +28,7 @@ export const MyPage = () => {
           <GoText>바로가기</GoText>
           <SNSLine>
             <SNSIconBox>
-              <SNSImg src={imgPath.path[11]} />
+              <SNSImg src={imgPath.path[9]} />
               <SNSTitle>github</SNSTitle>
             </SNSIconBox>
             <a
@@ -42,7 +42,7 @@ export const MyPage = () => {
           </SNSLine>
           <SNSLine>
             <SNSIconBox>
-              <SNSImg src={imgPath.path[12]} />
+              <SNSImg src={imgPath.path[10]} />
               <SNSTitle>instagram</SNSTitle>
             </SNSIconBox>
             <a
@@ -55,12 +55,12 @@ export const MyPage = () => {
             </a>
           </SNSLine>
         </SNSBox>
-      </ChatContainer>
+      </MyPageContainer>
     </>
   )
 }
 
-const ChatContainer = styled.div`
+const MyPageContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;

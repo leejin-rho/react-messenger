@@ -1,19 +1,15 @@
 import { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import { colors } from './style/colors'
-import { Chatting } from './components/Chatting'
-import { FriendList } from './components/FriendList'
-import { TapBar } from './components/TapBar'
-import { imgPath } from './style/imgPath'
+import { colors } from '../style/colors'
+import { TapBar } from '../components/TapBar'
+import { imgPath } from '../style/imgPath'
 
 const Messenger = () => {
   return (
     <Container>
       <SafeAreaImg src={imgPath.path[0]} isTop={true} />
-      {/* <Chatting /> */}
-      {/* <FriendList /> */}
       <TapBar />
-      <SafeAreaImg src={imgPath.path[6]} isTop={false} />
+      <SafeAreaImg src={imgPath.path[2]} isTop={false} />
     </Container>
   )
 }

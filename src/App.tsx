@@ -1,6 +1,6 @@
 import { createGlobalStyle } from 'styled-components'
 import reset from 'styled-reset'
-import Messenger from './Messenger'
+import Messenger from './pages/Messenger'
 import { colors } from './style/colors'
 
 function App() {

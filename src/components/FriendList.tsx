@@ -8,9 +8,9 @@ export const FriendList = () => {
   return (
     <FriendContainer>
       <FriendBox>
-        <Profile src={imgPath.path[4]} />
+        <Profile src={imgPath.profile[2]} />
         <FriendName>얼음땡만하는사람</FriendName>
-        <ArrowIcon style={{}} />
+        <ArrowIcon />
       </FriendBox>
     </FriendContainer>
   )
@@ -22,13 +22,14 @@ const FriendContainer = styled.div`
   width: 100%;
   height: 54.2rem;
   background-color: ${colors.grey_50};
+  overflow: auto;
 `
 
 const FriendBox = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0rem 1.25rem 0rem 1.25rem;
+  padding: 0rem 0.75rem 0rem 1.25rem;
   width: 100%;
   height: 4.375rem;
   background-color: ${colors.grey_50};
