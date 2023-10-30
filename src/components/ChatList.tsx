@@ -2,24 +2,29 @@ import styled from 'styled-components'
 import { colors } from '../style/colors'
 import { useState } from 'react'
 import { imgPath } from '../style/imgPath'
+import { Chatting } from './Chatting'
+import { Link } from 'react-router-dom'
 
 export const ChatList = () => {
   const [isNew, setIsNew] = useState(false)
+
   return (
     <ChatContainer>
-      <ChatBox>
-        <InfoBox>
-          <ChatProfileBox>
-            <ChatProfileImg src={imgPath.profile[1]} />
-            {isNew ? <ChatProfileAlarm /> : null}
-          </ChatProfileBox>
-          <ChatTextBox>
-            <ChatName>얼음땡만하는사람</ChatName>
-            <ChatContent>헤이 거기</ChatContent>
-          </ChatTextBox>
-        </InfoBox>
-        <ChatTime>10:22 AM</ChatTime>
-      </ChatBox>
+      <Link to="/chatting/1" style={{ display: 'contents' }}>
+        <ChatBox>
+          <InfoBox>
+            <ChatProfileBox>
+              <ChatProfileImg src={imgPath.profile[1]} />
+              {isNew ? <ChatProfileAlarm /> : null}
+            </ChatProfileBox>
+            <ChatTextBox>
+              <ChatName>얼음땡만하는사람</ChatName>
+              <ChatContent>헤이 거기</ChatContent>
+            </ChatTextBox>
+          </InfoBox>
+          <ChatTime>10:22 AM</ChatTime>
+        </ChatBox>
+      </Link>
     </ChatContainer>
   )
 }

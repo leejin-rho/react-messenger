@@ -8,7 +8,7 @@ export const FriendList = () => {
   return (
     <FriendContainer>
       <FriendBox>
-        <Profile src={imgPath.profile[2]} />
+        <Profile src={imgPath.profile[1]} />
         <FriendName>얼음땡만하는사람</FriendName>
         <ArrowIcon />
       </FriendBox>

@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { colors } from '../style/colors'
 import { imgPath } from '../style/imgPath'
 import { render } from 'react-dom'
+import { Link } from 'react-router-dom'
 
 export const Chatting = () => {
   interface ChatElm {
@@ -138,14 +139,16 @@ export const Chatting = () => {
   return (
     <ChattingContainer>
       <TopHeading>
-        {/* <SafeAreaImg src={imgPath.path[0]} /> */}
+        <SafeAreaImg src={imgPath.path[0]} />
         <UserContainer>
-          <BackIcon src={imgPath.path[1]} onClick={changeUser} />
+          <Link to="/" style={{ display: 'contents' }}>
+            <BackIcon src={imgPath.path[3]} />
+          </Link>
           <UserNameBox>
             <UserName>{nowChatting}</UserName>
             {isChatOn && <GreenCircle />}
           </UserNameBox>
-          <DotsIcon src={imgPath.path[7]} />
+          <DotsIcon src={imgPath.path[6]} />
         </UserContainer>
       </TopHeading>
       {isChatOn ? (
@@ -166,7 +169,9 @@ export const Chatting = () => {
                 </MyChatList>
               ) : (
                 <FriendContainer>
-                  <ProfileImg src={nowChatting === '얼음땡만하는사람' ? imgPath.path[4] : imgPath.path[5]}></ProfileImg>
+                  <ProfileImg
+                    src={nowChatting === '얼음땡만하는사람' ? imgPath.profile[1] : imgPath.profile[0]}
+                  ></ProfileImg>
                   <FriendChatList>
                     <FriendChatContainer>
                       <FriendName>{nowChatting}</FriendName>
@@ -180,14 +185,14 @@ export const Chatting = () => {
         </ChattingList>
       ) : (
         <NoChattingList>
-          <NoChatImg src={imgPath.path[8]} />
+          <NoChatImg src={imgPath.path[7]} />
           <NoChatText>작성된 메시지가 없습니다.</NoChatText>
         </NoChattingList>
       )}
       <BottomBox>
         <ChatArea>
           <InputContainer onSubmit={onSubmit}>
-            <PlusIcon src={imgPath.path[2]} />
+            <PlusIcon src={imgPath.path[4]} />
             <InputBox
               placeholder="메시지를 작성해주세요"
               ref={inputRef}
@@ -207,12 +212,12 @@ export const Chatting = () => {
                 alignItems: 'center',
               }}
             >
-              <AirplainIcon src={imgPath.path[3]} />
+              <AirplainIcon src={imgPath.path[5]} />
             </button>
           </InputContainer>
         </ChatArea>
-        {/* <SafeAreaImg src={imgPath.path[6]} /> */}
       </BottomBox>
+      <SafeAreaImg2 src={imgPath.path[2]} />
     </ChattingContainer>
   )
 }
@@ -222,8 +227,16 @@ const ChattingContainer = styled.div`
   flex-direction: column;
   background-color: ${colors.grey_50};
   align-items: center;
-  height: 100%;
+  width: 375px;
+  height: 812px;
+`
+
+const SafeAreaImg = styled.img`
   width: 100%;
+`
+const SafeAreaImg2 = styled.img`
+  width: 100%;
+  background-color: ${colors.white};
 `
 
 const TopHeading = styled.div`

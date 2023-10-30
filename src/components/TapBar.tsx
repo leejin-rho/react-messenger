@@ -1,22 +1,34 @@
 import styled from 'styled-components'
-import { useCallback, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { colors } from '../style/colors'
-import { FriendList } from './FriendList'
-import { ChatList } from './ChatList'
-import { MyPage } from './MyPage'
 import { ReactComponent as WriteIcon } from '../assets/svgs/write.svg'
 import { ReactComponent as EditIcon } from '../assets/svgs/edit.svg'
 import { ReactComponent as FriendsIcon } from '../assets/svgs/friends.svg'
 import { ReactComponent as ChattingIcon } from '../assets/svgs/chatting.svg'
 import { ReactComponent as SettingIcon } from '../assets/svgs/setting.svg'
 import { ReactComponent as SearchIcon } from '../assets/svgs/search.svg'
+import { FriendList } from './FriendList'
+import { ChatList } from './ChatList'
+import { MyPage } from './MyPage'
 
 export const TapBar = () => {
   const inputRef = useRef<HTMLInputElement>(null)
-  const [isFriend, setIsFriend] = useState(true)
-  const [isChatList, setIsChatting] = useState(false)
-  const [isSetting, setIsSetting] = useState(false)
+  const [isFriend, setIsFriend] = useState<boolean>(
+    localStorage.getItem('isFriend') ? localStorage.getItem('isFriend') === 'true' : true,
+  )
+  const [isChatList, setIsChatting] = useState<boolean>(
+    localStorage.getItem('isChatList') ? localStorage.getItem('isChatList') === 'true' : false,
+  )
+  const [isSetting, setIsSetting] = useState<boolean>(
+    localStorage.getItem('isSetting') ? localStorage.getItem('isSetting') === 'true' : false,
+  )
   const [inputValue, setInputValue] = useState<string>('')
+
+  useEffect(() => {
+    localStorage.setItem('isFriend', isFriend.toString())
+    localStorage.setItem('isChatList', isChatList.toString())
+    localStorage.setItem('isSetting', isSetting.toString())
+  }, [isFriend, isChatList, isSetting])
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value)

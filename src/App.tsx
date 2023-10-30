@@ -1,13 +1,20 @@
 import { createGlobalStyle } from 'styled-components'
 import reset from 'styled-reset'
-import Messenger from './pages/Messenger'
 import { colors } from './style/colors'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { Chatting } from './components/Chatting'
+import Messenger from './pages/Messenger'
 
 function App() {
   return (
     <>
       <GlobalStyle />
-      <Messenger />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Messenger />}></Route>
+          <Route path="/chatting/*" element={<Chatting />}></Route>
+        </Routes>
+      </BrowserRouter>
     </>
   )
 }

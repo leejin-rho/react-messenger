@@ -4,7 +4,7 @@
     "module": "commonjs",
     "strict": true,
     "jsx": "preserve",
-    "esModuleInterop": true,
+    "esModuleInterop": true
   },
   "include": ["src"],
   "exclude": ["node_modules"]
