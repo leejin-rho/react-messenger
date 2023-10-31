@@ -10,11 +10,10 @@ export const Chatting = () => {
   interface ChatElm {
     //채팅방 정보
     id: number
-    name: string
-    img: string
     chat: {
       //채팅 정보
       c_id: number
+      to: string
       from: string
       content: string
       time: string
@@ -32,12 +31,11 @@ export const Chatting = () => {
   const inputRef = useRef<HTMLInputElement>(null)
   const chatListRef = useRef<HTMLDivElement>(null)
   const [chatData, setChatData] = useState<ChatElm>({
-    id: opposite.uid,
-    name: opposite.userName,
-    img: '',
+    id: 0,
     chat: [
       {
         c_id: 0,
+        to: '',
         from: '',
         content: '',
         time: '',
@@ -106,12 +104,11 @@ export const Chatting = () => {
   const createChatting = (inputValue: string): void => {
     setChatData((prevChats: ChatElm) => {
       const newChatData = {
-        //localStorage 저장을 위해 분리
         ...prevChats,
         chat: [
-          ...prevChats.chat,
           {
             c_id: prevChats.chat[prevChats.chat.length - 1].c_id + 1,
+            to: opposite.userName,
             from: user,
             content: inputValue,
             time: getCurrentTimeString(),
