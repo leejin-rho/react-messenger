@@ -2,7 +2,8 @@ import styled from 'styled-components'
 import { colors } from '../style/colors'
 import { useState } from 'react'
 import { imgPath } from '../style/imgPath'
-import { Chatting } from './Chatting'
+import { Chatting } from '../pages/Chatting'
+import userData from '../assets/data/userData.json'
 import { Link } from 'react-router-dom'
 
 export const ChatList = () => {
@@ -10,32 +11,38 @@ export const ChatList = () => {
 
   return (
     <ChatContainer>
-      <Link to="/chatting/1" style={{ display: 'contents' }}>
-        <ChatBox>
-          <InfoBox>
-            <ChatProfileBox>
-              <ChatProfileImg src={imgPath.profile[1]} />
-              {isNew ? <ChatProfileAlarm /> : null}
-            </ChatProfileBox>
-            <ChatTextBox>
-              <ChatName>얼음땡만하는사람</ChatName>
-              <ChatContent>헤이 거기</ChatContent>
-            </ChatTextBox>
-          </InfoBox>
-          <ChatTime>10:22 AM</ChatTime>
-        </ChatBox>
-      </Link>
+      {userData.map((user: { uid: number; userName: string }) =>
+        user.uid != 0 ? (
+          <Link to={`/chatting/${user.uid}`} style={{ display: 'contents' }}>
+            <ChatBox key={user.uid}>
+              <InfoBox>
+                <ChatProfileBox>
+                  <ChatProfileImg src={imgPath.profile[user.uid]} />
+                  {isNew ? <ChatProfileAlarm /> : null}
+                </ChatProfileBox>
+                <ChatTextBox>
+                  <ChatName>{user.userName}</ChatName>
+                  <ChatContent>헤이 거기</ChatContent>
+                </ChatTextBox>
+              </InfoBox>
+              <ChatTime>10:22 AM</ChatTime>
+            </ChatBox>
+          </Link>
+        ) : null,
+      )}
     </ChatContainer>
   )
 }
 
 const ChatContainer = styled.div`
-  display: flex;
-  justify-content: center;
   width: 100%;
   height: 54.2rem;
   background-color: ${colors.grey_50};
   overflow: auto;
+  list-style-type: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `
 const ChatBox = styled.div`
   display: flex;

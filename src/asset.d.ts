@@ -2,3 +2,4 @@
 declare module '*.ttf'
 declare module '*.otf'
 declare module '*.svg'
+declare module '*.json'

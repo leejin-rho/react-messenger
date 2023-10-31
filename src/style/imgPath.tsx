@@ -22,5 +22,6 @@ export const imgPath = {
     require('../assets/images/profile6.png'),
     require('../assets/images/profile7.png'),
     require('../assets/images/profile8.png'),
+    require('../assets/images/profile9.png'),
   ],
 }

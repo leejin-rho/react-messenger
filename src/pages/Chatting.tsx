@@ -3,7 +3,8 @@ import styled from 'styled-components'
 import { colors } from '../style/colors'
 import { imgPath } from '../style/imgPath'
 import { render } from 'react-dom'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
+import userData from '../assets/data/userData.json'
 
 export const Chatting = () => {
   interface ChatElm {
@@ -20,15 +21,19 @@ export const Chatting = () => {
     }[]
   }
 
+  const { id } = useParams()
+  const opposite = userData[Number(id)]
+  const me = userData[0]
+
   const [isChatOn, setIsChatOn] = useState<boolean>(false)
-  const [nowChatting, setNowChatting] = useState<string>('얼음땡만하는사람')
-  const [user, setUser] = useState<string>('코카콜라맛있다')
+  const [nowChatting, setNowChatting] = useState<string>(opposite.userName)
+  const [user, setUser] = useState<string>(me.userName)
   const [inputValue, setInputValue] = useState<string>('')
   const inputRef = useRef<HTMLInputElement>(null)
   const chatListRef = useRef<HTMLDivElement>(null)
   const [chatData, setChatData] = useState<ChatElm>({
-    id: 0,
-    name: '얼음땡만하는사람',
+    id: opposite.uid,
+    name: opposite.userName,
     img: '',
     chat: [
       {
@@ -79,7 +84,7 @@ export const Chatting = () => {
 
       //입력한 값이 없을 때 alert 추가
       if (inputValue.trim() == '') {
-        alert('채팅을 입력해주세요.')
+        alert('메시지를 입력해주세요.')
       } else {
         createChatting(inputValue)
         setInputValue('')
@@ -115,7 +120,7 @@ export const Chatting = () => {
       }
       localStorage.setItem('chatData', JSON.stringify(newChatData))
 
-      //채팅 추가되면서 chat on, 이 후 삭제할 경우도 고려가능
+      //채팅 추가되면서 chat on, 이후 삭제할 경우도 고려가능
       setIsChatOn(newChatData.chat.length > 0)
 
       return newChatData
@@ -124,16 +129,16 @@ export const Chatting = () => {
 
   //간단하게 user 변경
   const changeUser = (): void => {
-    if (user === '코카콜라맛있다') {
-      setUser('얼음땡만하는사람')
-      setNowChatting('코카콜라맛있다')
+    if (user === me.userName) {
+      setUser(opposite.userName)
+      setNowChatting(me.userName)
     } else {
-      setUser('코카콜라맛있다')
-      setNowChatting('얼음땡만하는사람')
+      setUser(me.userName)
+      setNowChatting(opposite.userName)
     }
   }
 
-  // //좋아요 기능
+  //좋아요 기능
   // const giveHeart = (): void => {}
 
   return (
@@ -148,7 +153,7 @@ export const Chatting = () => {
             <UserName>{nowChatting}</UserName>
             {isChatOn && <GreenCircle />}
           </UserNameBox>
-          <DotsIcon src={imgPath.path[6]} />
+          <DotsIcon src={imgPath.path[6]} onClick={changeUser} />
         </UserContainer>
       </TopHeading>
       {isChatOn ? (
@@ -170,7 +175,7 @@ export const Chatting = () => {
               ) : (
                 <FriendContainer>
                   <ProfileImg
-                    src={nowChatting === '얼음땡만하는사람' ? imgPath.profile[1] : imgPath.profile[0]}
+                    src={nowChatting === opposite.userName ? imgPath.profile[opposite.uid] : imgPath.profile[0]}
                   ></ProfileImg>
                   <FriendChatList>
                     <FriendChatContainer>

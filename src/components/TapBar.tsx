@@ -134,6 +134,19 @@ export const TapBar = () => {
   )
 }
 
+type SafeAreaImgProps = {
+  isTop?: boolean
+}
+
+const SafeAreaImg = styled.img<SafeAreaImgProps>`
+  width: 100%;
+  background-color: transparent;
+`
+const SafeAreaImg2 = styled.img<SafeAreaImgProps>`
+  width: 100%;
+  background-color: ${colors.white};
+`
+
 const TopHeading = styled.div`
   display: flex;
   flex-direction: column;

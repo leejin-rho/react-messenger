@@ -2,27 +2,34 @@ import styled from 'styled-components'
 import { colors } from '../style/colors'
 import { useState } from 'react'
 import { imgPath } from '../style/imgPath'
+import userData from '../assets/data/userData.json'
 import { ReactComponent as ArrowIcon } from '../assets/svgs/arrow.svg'
 
 export const FriendList = () => {
   return (
     <FriendContainer>
-      <FriendBox>
-        <Profile src={imgPath.profile[1]} />
-        <FriendName>얼음땡만하는사람</FriendName>
-        <ArrowIcon />
-      </FriendBox>
+      {userData.map((user: { uid: number; userName: string }) =>
+        user.uid != 0 ? (
+          <FriendBox key={user.uid}>
+            <Profile src={imgPath.profile[user.uid]} />
+            <FriendName>{user.userName}</FriendName>
+            <ArrowIcon />
+          </FriendBox>
+        ) : null,
+      )}
     </FriendContainer>
   )
 }
 
 const FriendContainer = styled.div`
-  display: flex;
-  justify-content: center;
   width: 100%;
   height: 54.2rem;
   background-color: ${colors.grey_50};
   overflow: auto;
+  list-style-type: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `
 
 const FriendBox = styled.div`
