@@ -7,7 +7,7 @@ import { ReactComponent as LinkIcon } from '../assets/svgs/link.svg'
 import { Link } from 'react-router-dom'
 
 export const MyPage = () => {
-  //const [isChatList, setIsChatList] = useState(false)
+  const [userName, setUserName] = useState<String>('노이진')
 
   return (
     <>
@@ -18,7 +18,7 @@ export const MyPage = () => {
           <ProfileImg src={imgPath.profile[0]} />
           <TextBox>
             <NameBox>
-              <ProfileName>노이진</ProfileName>
+              <ProfileName>{userName}</ProfileName>
               <PencilIcon />
             </NameBox>
             <ProfileEmail>tbdpapdl@gmail.com</ProfileEmail>

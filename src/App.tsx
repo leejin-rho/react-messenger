@@ -5,10 +5,11 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { Chatting } from './pages/Chatting'
 import Messenger from './pages/Messenger'
 import userData from './assets/data/userData.json'
+import { RecoilRoot } from 'recoil'
 
 function App() {
   return (
-    <>
+    <RecoilRoot>
       <GlobalStyle />
       <BrowserRouter>
         <Routes>
@@ -16,7 +17,7 @@ function App() {
           <Route path="/chatting/:id" element={<Chatting />}></Route>
         </Routes>
       </BrowserRouter>
-    </>
+    </RecoilRoot>
   )
 }
 

@@ -5,6 +5,7 @@ import { imgPath } from '../style/imgPath'
 import { Chatting } from '../pages/Chatting'
 import userData from '../assets/data/userData.json'
 import { Link } from 'react-router-dom'
+import { useRecoilState, useRecoilValue } from 'recoil'
 
 export const ChatList = () => {
   const [isNew, setIsNew] = useState(false)

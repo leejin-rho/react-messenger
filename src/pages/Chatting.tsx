@@ -2,24 +2,12 @@ import { useState, useEffect, useCallback, useRef } from 'react'
 import styled from 'styled-components'
 import { colors } from '../style/colors'
 import { imgPath } from '../style/imgPath'
-import { render } from 'react-dom'
+import { chatDataState } from '../states/chatAtom'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import { Link, useParams } from 'react-router-dom'
 import userData from '../assets/data/userData.json'
 
 export const Chatting = () => {
-  interface ChatElm {
-    //채팅방 정보
-    id: number
-    chat: {
-      //채팅 정보
-      c_id: number
-      to: string
-      from: string
-      content: string
-      time: string
-    }[]
-  }
-
   const { id } = useParams()
   const opposite = userData[Number(id)]
   const me = userData[0]
@@ -30,27 +18,16 @@ export const Chatting = () => {
   const [inputValue, setInputValue] = useState<string>('')
   const inputRef = useRef<HTMLInputElement>(null)
   const chatListRef = useRef<HTMLDivElement>(null)
-  const [chatData, setChatData] = useState<ChatElm>({
-    id: 0,
-    chat: [
-      {
-        c_id: 0,
-        to: '',
-        from: '',
-        content: '',
-        time: '',
-      },
-    ],
-  })
+  const [chatData, setChatData] = useRecoilState(chatDataState)
 
   //local storage용
   useEffect(() => {
     //local storage load
     const Chattings = localStorage.getItem('chatData')
-    if (Chattings) {
+    if (Chattings && JSON.parse(Chattings)[Number(id)]) {
       setChatData(JSON.parse(Chattings))
       setIsChatOn(true)
-    }
+    } else setIsChatOn(false)
     //chatData가 비었을 땐 메세지 없음 화면이 나오도록
   }, [])
 
@@ -102,25 +79,33 @@ export const Chatting = () => {
   }
 
   const createChatting = (inputValue: string): void => {
-    setChatData((prevChats: ChatElm) => {
-      const newChatData = {
-        ...prevChats,
-        chat: [
-          {
-            c_id: prevChats.chat[prevChats.chat.length - 1].c_id + 1,
-            to: opposite.userName,
-            from: user,
-            content: inputValue,
-            time: getCurrentTimeString(),
-          },
-        ],
+    setChatData((prevChats) => {
+      const newChat = {
+        //상대 채팅데이터의 마지막 c_id에서 +1
+        c_id: prevChats[opposite.uid]?.chat.length
+          ? prevChats[opposite.uid].chat[prevChats[opposite.uid].chat.length - 1].c_id + 1
+          : 0,
+        to: opposite.userName,
+        from: user,
+        content: inputValue,
+        time: getCurrentTimeString(),
       }
-      localStorage.setItem('chatData', JSON.stringify(newChatData))
 
-      //채팅 추가되면서 chat on, 이후 삭제할 경우도 고려가능
-      setIsChatOn(newChatData.chat.length > 0)
+      const newChatData = {
+        //각 사용자의 uid값을 id에 넣어서 각각의 data 배열 생성
+        id: opposite.uid,
+        chat: prevChats[opposite.uid] ? [...prevChats[opposite.uid].chat, newChat] : [newChat],
+      }
 
-      return newChatData
+      const updatedChats = {
+        ...prevChats,
+        [opposite.uid]: newChatData,
+      }
+
+      localStorage.setItem('chatData', JSON.stringify(updatedChats))
+      setIsChatOn(updatedChats[opposite.uid].chat.length > 0)
+
+      return updatedChats
     }) //채팅리스트에 Input 추가
   }
 
@@ -134,9 +119,6 @@ export const Chatting = () => {
       setNowChatting(opposite.userName)
     }
   }
-
-  //좋아요 기능
-  // const giveHeart = (): void => {}
 
   return (
     <ChattingContainer>
@@ -155,35 +137,39 @@ export const Chatting = () => {
       </TopHeading>
       {isChatOn ? (
         <ChattingList ref={chatListRef}>
-          {chatData.chat
-            .filter((chat) => chat.c_id !== 0)
-            .map((chat, index, arr) => {
-              //만약 그 전 채팅시간과 같다면 그 전 채팅시간이 사라지고 마지막 채팅에만 보이도록
-              const showTime: boolean =
-                index === arr.length - 1 || chat.time !== arr[index + 1].time || chat.from !== arr[index + 1].from
+          {chatData[opposite.uid]?.chat.map((chat, index, arr) => {
+            //만약 그 전 채팅시간과 같다면 그 전 채팅시간이 사라지고 마지막 채팅에만 보이도록
+            const showTime: boolean =
+              index === arr.length - 1 || chat.time !== arr[index + 1].time || chat.from !== arr[index + 1].from
+            const showProfile: boolean =
+              index === 0 || chat.time !== arr[index - 1]?.time || chat.from !== arr[index - 1].from
 
-              return chat.from === user ? (
-                <MyChatList>
-                  <MyChatContainer>
-                    <ChattingBox1>{chat.content}</ChattingBox1>
-                  </MyChatContainer>
-                  {showTime ? <ChatTime>{chat.time}</ChatTime> : null}
-                </MyChatList>
-              ) : (
-                <FriendContainer>
+            return chat.from === user ? (
+              <MyChatList>
+                <MyChatContainer>
+                  <ChattingBox1>{chat.content}</ChattingBox1>
+                </MyChatContainer>
+                {showTime ? <ChatTime>{chat.time}</ChatTime> : null}
+              </MyChatList>
+            ) : (
+              <FriendContainer>
+                {showProfile ? (
                   <ProfileImg
                     src={nowChatting === opposite.userName ? imgPath.profile[opposite.uid] : imgPath.profile[0]}
                   ></ProfileImg>
-                  <FriendChatList>
-                    <FriendChatContainer>
-                      <FriendName>{nowChatting}</FriendName>
-                      <ChattingBox2>{chat.content}</ChattingBox2>
-                    </FriendChatContainer>
-                    {showTime ? <ChatTime>{chat.time}</ChatTime> : null}
-                  </FriendChatList>
-                </FriendContainer>
-              )
-            })}
+                ) : (
+                  <NoProfileImg />
+                )}
+                <FriendChatList>
+                  <FriendChatContainer>
+                    {showProfile ? <FriendName>{nowChatting}</FriendName> : null}
+                    <ChattingBox2>{chat.content}</ChattingBox2>
+                  </FriendChatContainer>
+                  {showTime ? <ChatTime>{chat.time}</ChatTime> : null}
+                </FriendChatList>
+              </FriendContainer>
+            )
+          })}
         </ChattingList>
       ) : (
         <NoChattingList>
@@ -394,6 +380,13 @@ const ProfileImg = styled.img`
   margin-right: 0.5rem;
 `
 
+const NoProfileImg = styled.div`
+  width: 3.125rem;
+  height: 3.125rem;
+  border-radius: 50px;
+  margin: 0rem 0.5rem 0rem 0.5rem;
+`
+
 const FriendChatContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -415,10 +408,6 @@ const ChatTime = styled.span`
   line-height: 120%; /* 16.8px */
   margin-bottom: 0.6rem;
 `
-
-// const SafeAreaImg = styled.img`
-//   width: 100%;
-// `
 
 const ChatArea = styled.div`
   display: flex;

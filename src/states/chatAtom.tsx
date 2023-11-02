@@ -1,16 +1,17 @@
-import { atom, useRecoilState } from 'recoil'
+import { atom } from 'recoil'
 
-const chatDataState = atom({
+interface ChatElm {
+  id: number
+  chat: {
+    c_id: number
+    to: string
+    from: string
+    content: string
+    time: string
+  }[]
+}
+
+export const chatDataState = atom<{ [id: number]: ChatElm }>({
   key: 'chatDataState',
-  default: {
-    id: 0,
-    chat: {
-      //채팅 정보
-      c_id: 0,
-      to: '',
-      from: '',
-      content: '',
-      time: '',
-    },
-  },
+  default: [],
 })
