@@ -343,7 +343,7 @@ const ChattingBox1 = styled.span`
   color: ${colors.white};
   line-height: 120%;
   font-family: 'Pretendard-Light';
-  margin-bottom: 8px;
+  margin-bottom: 0.5rem;
   word-break: break-all;
 `
 
@@ -356,7 +356,7 @@ const ChattingBox2 = styled.span`
   width: fit-content;
   line-height: 120%;
   font-family: 'Pretendard-Light';
-  margin-bottom: 8px;
+  margin-bottom: 0.5rem;
   word-break: break-all;
 `
 
@@ -364,7 +364,6 @@ const FriendChatList = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  margin-bottom: 0.6rem;
 `
 
 const FriendContainer = styled.div`
@@ -382,8 +381,6 @@ const ProfileImg = styled.img`
 
 const NoProfileImg = styled.div`
   width: 3.125rem;
-  height: 3.125rem;
-  border-radius: 50px;
   margin: 0rem 0.5rem 0rem 0.5rem;
 `
 

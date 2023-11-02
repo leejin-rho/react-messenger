@@ -2,13 +2,14 @@ import styled from 'styled-components'
 import { colors } from '../style/colors'
 import { useState } from 'react'
 import { imgPath } from '../style/imgPath'
-import { Chatting } from '../pages/Chatting'
 import userData from '../assets/data/userData.json'
 import { Link } from 'react-router-dom'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilValue } from 'recoil'
+import { chatDataState } from '../states/chatAtom'
 
 export const ChatList = () => {
   const [isNew, setIsNew] = useState(false)
+  const chatData = useRecoilValue(chatDataState)
 
   return (
     <ChatContainer>
@@ -23,10 +24,12 @@ export const ChatList = () => {
                 </ChatProfileBox>
                 <ChatTextBox>
                   <ChatName>{user.userName}</ChatName>
-                  <ChatContent>헤이 거기</ChatContent>
+                  <ChatContent>
+                    {chatData[user.uid]?.chat?.[chatData[user.uid]?.chat.length - 1]?.content || ''}
+                  </ChatContent>
                 </ChatTextBox>
               </InfoBox>
-              <ChatTime>10:22 AM</ChatTime>
+              <ChatTime>{chatData[user.uid]?.chat?.[chatData[user.uid]?.chat.length - 1]?.time || ''}</ChatTime>
             </ChatBox>
           </Link>
         ) : null,
