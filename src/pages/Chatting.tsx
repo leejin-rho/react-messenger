@@ -246,14 +246,12 @@ const UserContainer = styled.div`
   align-items: center;
   margin: 0rem 1.25rem 0.9rem 1.25rem;
 `
-
 const UserNameBox = styled.div`
   display: inline-flex;
   align-items: flex-start;
   width: 283px;
   height: 28px;
 `
-
 const UserName = styled.span`
   color: ${colors.grey_900};
   font-size: 20px;
