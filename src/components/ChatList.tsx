@@ -21,6 +21,13 @@ export const ChatList = ({ searchValue }: { searchValue: string }) => {
     }
   }, [])
 
+  //채팅 목록에서 18글자가 넘어가면 ...표시 되도록
+  const editContent = (content: String) => {
+    if (content.length >= 18) {
+      return content.substring(0, 18) + '...'
+    } else return content
+  }
+
   return (
     <ChatContainer>
       {userData
@@ -29,6 +36,7 @@ export const ChatList = ({ searchValue }: { searchValue: string }) => {
         )
         .filter((user: { uid: number; userName: string }) => chatData[user.uid]?.chat.length > 0)
         .sort((a: { uid: number }, b: { uid: number }) => {
+          //마지막에 보낸 채팅방이 가장 위로 올 수 있도록
           const lastChat_1 = new Date(chatData[a.uid]?.chat[chatData[a.uid]?.chat.length - 1]?.time).getTime()
           const lastChat_2 = new Date(chatData[b.uid]?.chat[chatData[b.uid]?.chat.length - 1]?.time).getTime()
           return lastChat_2 - lastChat_1
@@ -45,7 +53,7 @@ export const ChatList = ({ searchValue }: { searchValue: string }) => {
                   <ChatTextBox>
                     <ChatName>{user.userName}</ChatName>
                     <ChatContent>
-                      {chatData[user.uid]?.chat?.[chatData[user.uid]?.chat.length - 1]?.content || ''}
+                      {editContent(chatData[user.uid]?.chat?.[chatData[user.uid]?.chat.length - 1]?.content) || ''}
                     </ChatContent>
                   </ChatTextBox>
                 </InfoBox>
@@ -88,7 +96,7 @@ const ChatBox = styled.div`
 `
 const InfoBox = styled.div`
   display: flex;
-  width: 12.375rem;
+  width: 18rem;
   height: 3.75rem;
   align-items: center;
 `
@@ -118,11 +126,13 @@ const ChatProfileAlarm = styled.div`
 `
 
 const ChatTextBox = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
   height: 2.63rem;
 `
 const ChatName = styled.span`
+  width: 100%;
   color: ${colors.grey_900};
   font-family: 'Pretendard-Medium';
   font-size: 1.125rem;
@@ -130,6 +140,7 @@ const ChatName = styled.span`
 `
 const ChatContent = styled.div`
   color: ${colors.grey_400};
+  width: 100%;
   font-family: 'Pretendard-Regular';
   font-size: 0.875rem;
   line-height: 0.875rem;
