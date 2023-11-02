@@ -6,19 +6,23 @@ import userData from '../assets/data/userData.json'
 import { ReactComponent as ArrowIcon } from '../assets/svgs/arrow.svg'
 import { Link } from 'react-router-dom'
 
-export const FriendList = () => {
+export const FriendList = ({ searchValue }: { searchValue: string }) => {
   return (
     <FriendContainer>
-      {userData.map((user: { uid: number; userName: string }) =>
-        user.uid != 0 ? (
-          <Link to={`/chatting/${user.uid}`} style={{ display: 'contents' }}>
-            <FriendBox key={user.uid}>
-              <Profile src={imgPath.profile[user.uid]} />
-              <FriendName>{user.userName}</FriendName> <ArrowIcon />
-            </FriendBox>
-          </Link>
-        ) : null,
-      )}
+      {userData
+        .filter((user: { uid: number; userName: string }) =>
+          user.userName.toLowerCase().includes(searchValue.toLowerCase()),
+        )
+        .map((user: { uid: number; userName: string }) =>
+          user.uid != 0 ? (
+            <Link to={`/chatting/${user.uid}`} style={{ display: 'contents' }}>
+              <FriendBox key={user.uid}>
+                <Profile src={imgPath.profile[user.uid]} />
+                <FriendName>{user.userName}</FriendName> <ArrowIcon />
+              </FriendBox>
+            </Link>
+          ) : null,
+        )}
     </FriendContainer>
   )
 }

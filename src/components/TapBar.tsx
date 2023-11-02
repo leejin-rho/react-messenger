@@ -13,6 +13,7 @@ import { MyPage } from './MyPage'
 
 export const TapBar = () => {
   const inputRef = useRef<HTMLInputElement>(null)
+  //탭바 상태 localStorage에 저장
   const [isFriend, setIsFriend] = useState<boolean>(
     localStorage.getItem('isFriend') ? localStorage.getItem('isFriend') === 'true' : true,
   )
@@ -79,20 +80,8 @@ export const TapBar = () => {
                 onClick={handleInputClick}
               />
             </InputLine>
-            {/* <button
-          type="submit"
-          style={{
-            border: 'none',
-            backgroundColor: 'transparent',
-            width: 24,
-            height: 24,
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        ></button> */}
           </InputContainer>
-          {isFriend ? <FriendList /> : <ChatList />}
+          {isFriend ? <FriendList searchValue={inputValue} /> : <ChatList searchValue={inputValue} />}
         </>
       ) : (
         <MyPage />

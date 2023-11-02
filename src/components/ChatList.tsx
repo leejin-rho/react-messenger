@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 import { useRecoilValue, useRecoilState } from 'recoil'
 import { chatDataState } from '../states/chatAtom'
 
-export const ChatList = () => {
+export const ChatList = ({ searchValue }: { searchValue: string }) => {
   const [isNew, setIsNew] = useState(false)
   const [chatData, setChatData] = useRecoilState(chatDataState)
   const todayDate = new Date()
@@ -22,27 +22,31 @@ export const ChatList = () => {
 
   return (
     <ChatContainer>
-      {userData.map((user: { uid: number; userName: string }) =>
-        user.uid != 0 ? (
-          <Link to={`/chatting/${user.uid}`} style={{ display: 'contents' }}>
-            <ChatBox key={user.uid}>
-              <InfoBox>
-                <ChatProfileBox>
-                  <ChatProfileImg src={imgPath.profile[user.uid]} />
-                  {isNew ? <ChatProfileAlarm /> : null}
-                </ChatProfileBox>
-                <ChatTextBox>
-                  <ChatName>{user.userName}</ChatName>
-                  <ChatContent>
-                    {chatData[user.uid]?.chat?.[chatData[user.uid]?.chat.length - 1]?.content || ''}
-                  </ChatContent>
-                </ChatTextBox>
-              </InfoBox>
-              <ChatTime>{chatData[user.uid]?.chat?.[chatData[user.uid]?.chat.length - 1]?.time || ''}</ChatTime>
-            </ChatBox>
-          </Link>
-        ) : null,
-      )}
+      {userData
+        .filter((user: { uid: number; userName: string }) =>
+          user.userName.toLowerCase().includes(searchValue.toLowerCase()),
+        )
+        .map((user: { uid: number; userName: string }) =>
+          user.uid != 0 ? (
+            <Link to={`/chatting/${user.uid}`} style={{ display: 'contents' }}>
+              <ChatBox key={user.uid}>
+                <InfoBox>
+                  <ChatProfileBox>
+                    <ChatProfileImg src={imgPath.profile[user.uid]} />
+                    {isNew ? <ChatProfileAlarm /> : null}
+                  </ChatProfileBox>
+                  <ChatTextBox>
+                    <ChatName>{user.userName}</ChatName>
+                    <ChatContent>
+                      {chatData[user.uid]?.chat?.[chatData[user.uid]?.chat.length - 1]?.content || ''}
+                    </ChatContent>
+                  </ChatTextBox>
+                </InfoBox>
+                <ChatTime>{chatData[user.uid]?.chat?.[chatData[user.uid]?.chat.length - 1]?.time || ''}</ChatTime>
+              </ChatBox>
+            </Link>
+          ) : null,
+        )}
     </ChatContainer>
   )
 }
