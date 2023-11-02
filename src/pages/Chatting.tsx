@@ -31,9 +31,7 @@ export const Chatting = () => {
       //처음에 가장 아래 스크롤에서 시작
       setTimeout(() => {
         const element = chatListRef.current
-        if (element) {
-          element.scrollTop = element.scrollHeight
-        }
+        if (element) element.scrollTop = element.scrollHeight
       }, 0)
     } else setIsChatOn(false)
     //chatData가 비었을 땐 메세지 없음 화면이 나오도록
