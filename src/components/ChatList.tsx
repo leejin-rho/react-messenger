@@ -6,11 +6,12 @@ import userData from '../assets/data/userData.json'
 import { Link } from 'react-router-dom'
 import { useRecoilValue, useRecoilState } from 'recoil'
 import { chatDataState } from '../states/chatAtom'
+import { format } from 'date-fns'
 
 export const ChatList = ({ searchValue }: { searchValue: string }) => {
   const [isNew, setIsNew] = useState(false)
   const [chatData, setChatData] = useRecoilState(chatDataState)
-  const todayDate = new Date()
+  const today = format(new Date(), 'yyyy/MM/dd')
 
   //local storage
   useEffect(() => {
@@ -27,6 +28,11 @@ export const ChatList = ({ searchValue }: { searchValue: string }) => {
           user.userName.toLowerCase().includes(searchValue.toLowerCase()),
         )
         .filter((user: { uid: number; userName: string }) => chatData[user.uid]?.chat.length > 0)
+        .sort((a: { uid: number }, b: { uid: number }) => {
+          const lastChat_1 = new Date(chatData[a.uid]?.chat[chatData[a.uid]?.chat.length - 1]?.time).getTime()
+          const lastChat_2 = new Date(chatData[b.uid]?.chat[chatData[b.uid]?.chat.length - 1]?.time).getTime()
+          return lastChat_2 - lastChat_1
+        })
         .map((user: { uid: number; userName: string }) =>
           user.uid != 0 ? (
             <Link to={`/chatting/${user.uid}`} style={{ display: 'contents' }}>
@@ -43,7 +49,18 @@ export const ChatList = ({ searchValue }: { searchValue: string }) => {
                     </ChatContent>
                   </ChatTextBox>
                 </InfoBox>
-                <ChatTime>{chatData[user.uid]?.chat?.[chatData[user.uid]?.chat.length - 1]?.time || ''}</ChatTime>
+                <ChatTime>
+                  {format(
+                    new Date(chatData[user.uid]?.chat?.[chatData[user.uid]?.chat.length - 1]?.time),
+                    today ===
+                      format(
+                        new Date(chatData[user.uid]?.chat?.[chatData[user.uid]?.chat.length - 1]?.time),
+                        'yyyy/MM/dd',
+                      )
+                      ? 'hh:mm'
+                      : 'MM/dd',
+                  ) || ''}
+                </ChatTime>
               </ChatBox>
             </Link>
           ) : null,

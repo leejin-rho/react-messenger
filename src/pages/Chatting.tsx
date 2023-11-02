@@ -6,6 +6,7 @@ import { chatDataState } from '../states/chatAtom'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { Link, useParams } from 'react-router-dom'
 import userData from '../assets/data/userData.json'
+import { format } from 'date-fns'
 
 export const Chatting = () => {
   const { id } = useParams()
@@ -69,15 +70,6 @@ export const Chatting = () => {
     [inputValue],
   )
 
-  //시간 함수
-  const getCurrentTimeString = (): string => {
-    const date = new Date()
-    let timeUnit = date.getHours() < 12 ? 'AM' : 'PM'
-    let Hours = date.getHours() < 12 ? date.getHours() : date.getHours() - 12
-
-    return `${String(Hours).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}${timeUnit}`
-  }
-
   const createChatting = (inputValue: string): void => {
     setChatData((prevChats) => {
       const newChat = {
@@ -88,7 +80,7 @@ export const Chatting = () => {
         to: opposite.userName,
         from: user,
         content: inputValue,
-        time: getCurrentTimeString(),
+        time: new Date().toISOString(),
       }
 
       const newChatData = {
@@ -138,18 +130,23 @@ export const Chatting = () => {
       {isChatOn ? (
         <ChattingList ref={chatListRef}>
           {chatData[opposite.uid]?.chat.map((chat, index, arr) => {
-            //만약 그 전 채팅시간과 같다면 그 전 채팅시간이 사라지고 마지막 채팅에만 보이도록
+            //만약 그 전 채팅시간과 같다면 그 전 채팅시간이 사라지고 마지막 채팅에만
             const showTime: boolean =
-              index === arr.length - 1 || chat.time !== arr[index + 1].time || chat.from !== arr[index + 1].from
+              index === arr.length - 1 ||
+              format(new Date(chat.time), 'hh:mm') !== format(new Date(arr[index + 1].time), 'hh:mm') ||
+              chat.from !== arr[index + 1].from
+            //만약 그 전 채팅시간과 같다면 그 전 채팅시간이 사라지고 첫 채팅에만 프로필
             const showProfile: boolean =
-              index === 0 || chat.time !== arr[index - 1]?.time || chat.from !== arr[index - 1].from
+              index === 0 ||
+              format(new Date(chat.time), 'hh:mm') !== format(new Date(arr[index - 1]?.time), 'hh:mm') ||
+              chat.from !== arr[index - 1].from
 
             return chat.from === user ? (
               <MyChatList>
                 <MyChatContainer>
                   <ChattingBox1>{chat.content}</ChattingBox1>
                 </MyChatContainer>
-                {showTime ? <ChatTime>{chat.time}</ChatTime> : null}
+                {showTime ? <ChatTime>{format(new Date(chat.time), 'hh:mm')}</ChatTime> : null}
               </MyChatList>
             ) : (
               <FriendContainer>
@@ -165,7 +162,7 @@ export const Chatting = () => {
                     {showProfile ? <FriendName>{nowChatting}</FriendName> : null}
                     <ChattingBox2>{chat.content}</ChattingBox2>
                   </FriendChatContainer>
-                  {showTime ? <ChatTime>{chat.time}</ChatTime> : null}
+                  {showTime ? <ChatTime>{format(new Date(chat.time), 'hh:mm')}</ChatTime> : null}
                 </FriendChatList>
               </FriendContainer>
             )
