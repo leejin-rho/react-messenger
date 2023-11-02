@@ -26,6 +26,7 @@ export const ChatList = ({ searchValue }: { searchValue: string }) => {
         .filter((user: { uid: number; userName: string }) =>
           user.userName.toLowerCase().includes(searchValue.toLowerCase()),
         )
+        .filter((user: { uid: number; userName: string }) => chatData[user.uid]?.chat.length > 0)
         .map((user: { uid: number; userName: string }) =>
           user.uid != 0 ? (
             <Link to={`/chatting/${user.uid}`} style={{ display: 'contents' }}>
