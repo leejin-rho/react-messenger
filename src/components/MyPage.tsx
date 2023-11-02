@@ -7,6 +7,7 @@ import { ReactComponent as LinkIcon } from '../assets/svgs/link.svg'
 import { Link } from 'react-router-dom'
 
 export const MyPage = () => {
+  const [editName, setEditName] = useState<boolean>(false)
   const [userName, setUserName] = useState<String>('노이진')
 
   return (
@@ -18,8 +19,8 @@ export const MyPage = () => {
           <ProfileImg src={imgPath.profile[0]} />
           <TextBox>
             <NameBox>
-              <ProfileName>{userName}</ProfileName>
-              <PencilIcon />
+              {editName ? null : <ProfileName>{userName}</ProfileName>}
+              <PencilIcon onClick={() => setEditName(true)} />
             </NameBox>
             <ProfileEmail>tbdpapdl@gmail.com</ProfileEmail>
           </TextBox>

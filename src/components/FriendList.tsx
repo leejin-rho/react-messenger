@@ -4,17 +4,19 @@ import { useState } from 'react'
 import { imgPath } from '../style/imgPath'
 import userData from '../assets/data/userData.json'
 import { ReactComponent as ArrowIcon } from '../assets/svgs/arrow.svg'
+import { Link } from 'react-router-dom'
 
 export const FriendList = () => {
   return (
     <FriendContainer>
       {userData.map((user: { uid: number; userName: string }) =>
         user.uid != 0 ? (
-          <FriendBox key={user.uid}>
-            <Profile src={imgPath.profile[user.uid]} />
-            <FriendName>{user.userName}</FriendName>
-            <ArrowIcon />
-          </FriendBox>
+          <Link to={`/chatting/${user.uid}`} style={{ display: 'contents' }}>
+            <FriendBox key={user.uid}>
+              <Profile src={imgPath.profile[user.uid]} />
+              <FriendName>{user.userName}</FriendName> <ArrowIcon />
+            </FriendBox>
+          </Link>
         ) : null,
       )}
     </FriendContainer>

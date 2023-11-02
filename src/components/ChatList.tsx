@@ -1,15 +1,24 @@
 import styled from 'styled-components'
 import { colors } from '../style/colors'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { imgPath } from '../style/imgPath'
 import userData from '../assets/data/userData.json'
 import { Link } from 'react-router-dom'
-import { useRecoilValue } from 'recoil'
+import { useRecoilValue, useRecoilState } from 'recoil'
 import { chatDataState } from '../states/chatAtom'
 
 export const ChatList = () => {
   const [isNew, setIsNew] = useState(false)
-  const chatData = useRecoilValue(chatDataState)
+  const [chatData, setChatData] = useRecoilState(chatDataState)
+  const todayDate = new Date()
+
+  //local storage
+  useEffect(() => {
+    const Chattings = localStorage.getItem('chatData')
+    if (Chattings) {
+      setChatData(JSON.parse(Chattings))
+    }
+  }, [])
 
   return (
     <ChatContainer>
