@@ -28,7 +28,7 @@ export const Chatting = () => {
     if (Chattings && JSON.parse(Chattings)[Number(id)]) {
       setChatData(JSON.parse(Chattings))
       setIsChatOn(true)
-      //처음에 맨 아래스크롤에서 시작하도록 조정
+      //처음에 맨 아래스크롤에서 시작
       setTimeout(() => {
         const element = chatListRef.current
         if (element) {
