@@ -1,15 +1,36 @@
 import styled from 'styled-components'
 import { colors } from '../style/colors'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { imgPath } from '../style/imgPath'
 import { ReactComponent as PencilIcon } from '../assets/svgs/pencil.svg'
 import { ReactComponent as LinkIcon } from '../assets/svgs/link.svg'
-import { Link } from 'react-router-dom'
+import userData from '../assets/data/userData.json'
 
 export const MyPage = () => {
   const [editName, setEditName] = useState<boolean>(false)
-  const [userName, setUserName] = useState<String>('노이진')
+  const [userName, setUserName] = useState<String>(userData[0].userName)
+  const [inputValue, setInputValue] = useState<string>('')
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value)
+  }
+  const onSubmit = useCallback(
+    (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault()
+      //json파일을 localStorage에 저장하기 조금 불편해서...
+      //이 부분은 유지안됨
+      setUserName(inputValue)
+      userData[0].userName = inputValue
+      setEditName(false)
 
+      //입력한 값이 없을 때 alert 추가
+      if (inputValue.trim() == '') {
+        alert('이름을 입력해주세요.')
+      } else {
+        setInputValue('')
+      }
+    },
+    [inputValue],
+  )
   return (
     <>
       <StatusBar src={imgPath.path[1]} />
@@ -19,8 +40,15 @@ export const MyPage = () => {
           <ProfileImg src={imgPath.profile[0]} />
           <TextBox>
             <NameBox>
-              {editName ? null : <ProfileName>{userName}</ProfileName>}
-              <PencilIcon onClick={() => setEditName(true)} />
+              {editName ? (
+                <InputContainer onSubmit={onSubmit}>
+                  <InputBox placeholder="이름" value={inputValue} onChange={onChange} />
+                </InputContainer>
+              ) : (
+                <>
+                  <ProfileName>{userName}</ProfileName> <PencilIcon onClick={() => setEditName(true)} />
+                </>
+              )}
             </NameBox>
             <ProfileEmail>tbdpapdl@gmail.com</ProfileEmail>
           </TextBox>
@@ -155,4 +183,25 @@ const SNSIconBox = styled.div`
   justify-content: center;
   align-items: center;
   gap: 0.5rem;
+`
+const InputContainer = styled.form`
+  width: fit-content;
+  display: flex;
+`
+
+const InputBox = styled.input`
+  width: 10rem;
+  height: 2.2rem;
+  outline: none;
+  border: none;
+  border-radius: 0.375rem;
+  background: ${colors.white};
+  font-size: 1rem;
+  font-family: 'Pretendard-Regular';
+  padding: 0.6rem 0.2rem 0.6rem 0.5rem;
+
+  &::placeholder {
+    /* Chrome, Firefox, Opera, Safari */
+    color: ${colors.grey_400};
+  }
 `

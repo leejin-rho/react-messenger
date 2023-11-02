@@ -35,20 +35,6 @@ export const TapBar = () => {
     setInputValue(e.target.value)
   }
 
-  const onSubmit = useCallback(
-    (e: React.FormEvent<HTMLFormElement>) => {
-      e.preventDefault()
-
-      //입력한 값이 없을 때 alert 추가
-      if (inputValue.trim() == '') {
-        alert('채팅을 입력해주세요.')
-      } else {
-        setInputValue('')
-      }
-    },
-    [inputValue],
-  )
-
   //inputRef설정 함수
   const handleInputClick = (e: React.MouseEvent<HTMLInputElement>) => {
     e.preventDefault()
@@ -69,7 +55,7 @@ export const TapBar = () => {
       </TopHeading>
       {!isSetting ? (
         <>
-          <InputContainer onSubmit={onSubmit}>
+          <InputContainer>
             <InputLine>
               <SearchIcon style={{ width: '1.5rem' }} />
               <InputBox
@@ -122,19 +108,6 @@ export const TapBar = () => {
     </>
   )
 }
-
-type SafeAreaImgProps = {
-  isTop?: boolean
-}
-
-const SafeAreaImg = styled.img<SafeAreaImgProps>`
-  width: 100%;
-  background-color: transparent;
-`
-const SafeAreaImg2 = styled.img<SafeAreaImgProps>`
-  width: 100%;
-  background-color: ${colors.white};
-`
 
 const TopHeading = styled.div`
   display: flex;
