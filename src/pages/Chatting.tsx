@@ -28,6 +28,13 @@ export const Chatting = () => {
     if (Chattings && JSON.parse(Chattings)[Number(id)]) {
       setChatData(JSON.parse(Chattings))
       setIsChatOn(true)
+      //처음에 맨 아래스크롤에서 시작하도록 조정
+      setTimeout(() => {
+        const element = chatListRef.current
+        if (element) {
+          element.scrollTop = element.scrollHeight
+        }
+      }, 0)
     } else setIsChatOn(false)
     //chatData가 비었을 땐 메세지 없음 화면이 나오도록
   }, [])
