@@ -154,7 +154,7 @@ export const Chatting = () => {
                 {showTime ? <ChatTime>{format(new Date(chat.time), 'hh:mm')}</ChatTime> : null}
               </MyChatList>
             ) : (
-              <FriendContainer>
+              <FriendContainer style={{ marginTop: showProfile ? '0.3rem' : 0 }}>
                 {showProfile ? (
                   <ProfileImg
                     src={nowChatting === opposite.userName ? imgPath.profile[opposite.uid] : imgPath.profile[0]}
