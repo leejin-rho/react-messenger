@@ -278,7 +278,6 @@ const DotsIcon = styled.img`
   width: 24px;
   height: 24px;
 `
-
 const BottomBox = styled.div`
   display: flex;
   flex-direction: column;
