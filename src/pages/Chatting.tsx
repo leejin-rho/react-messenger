@@ -5,7 +5,7 @@ import { imgPath } from '../style/imgPath'
 import { chatDataState } from '../states/chatAtom'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { Link, useParams } from 'react-router-dom'
-import { format } from 'date-fns'
+import { format, getHours } from 'date-fns'
 import userData from '../assets/data/userData.json'
 
 export const Chatting = () => {
@@ -134,6 +134,7 @@ export const Chatting = () => {
       </TopHeading>
       {isChatOn ? (
         <ChattingList ref={chatListRef}>
+          {/* <NextDay>{getHours(new Date()) === 0 && format(new Date(), 'yyyy-MM-dd')}</NextDay> */}
           {chatData[opposite.uid]?.chat.map((chat, index, arr) => {
             //만약 그 전 채팅시간과 같다면 그 전 채팅시간이 사라지고 마지막 채팅에만
             const showTime: boolean =
@@ -146,13 +147,23 @@ export const Chatting = () => {
               format(new Date(chat.time), 'hh:mm') !== format(new Date(arr[index - 1]?.time), 'hh:mm') ||
               chat.from !== arr[index - 1].from
 
+            const chatDate = format(new Date(chat.time), 'yyyy-MM-dd')
+            const prevChatDate = index > 0 ? format(new Date(arr[index - 1].time), 'yyyy-MM-dd') : ''
+
             return chat.from === user ? (
-              <MyChatList>
-                <MyChatContainer>
-                  <ChattingBox1>{chat.content}</ChattingBox1>
-                </MyChatContainer>
-                {showTime ? <ChatTime>{format(new Date(chat.time), 'hh:mm')}</ChatTime> : null}
-              </MyChatList>
+              <>
+                {chatDate !== prevChatDate && (
+                  <NextDayBox>
+                    <NextDay>{chatDate}</NextDay>
+                  </NextDayBox>
+                )}
+                <MyChatList>
+                  <MyChatContainer>
+                    <ChattingBox1>{chat.content}</ChattingBox1>
+                  </MyChatContainer>
+                  {showTime ? <ChatTime>{format(new Date(chat.time), 'hh:mm')}</ChatTime> : null}
+                </MyChatList>
+              </>
             ) : (
               <FriendContainer style={{ marginTop: showProfile ? '0.3rem' : 0 }}>
                 {showProfile ? (
@@ -453,4 +464,22 @@ const InputBox = styled.input`
 const AirplainIcon = styled.img`
   height: 24px;
   width: 24px;
+`
+const NextDayBox = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 1.5rem 0rem 1.5rem 0rem;
+`
+const NextDay = styled.span`
+  width: fit-content;
+  align-items: center;
+  text-align: center;
+  color: ${colors.grey_700};
+  font-family: 'Pretendard-Light';
+  font-size: 13px;
+  /* border: 0.1rem solid ;
+  border-radius: 5rem; */
+  padding: 0.35rem 1.7rem 0.35rem 1.7rem;
 `
