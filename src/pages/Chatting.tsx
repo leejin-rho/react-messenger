@@ -5,8 +5,8 @@ import { imgPath } from '../style/imgPath'
 import { chatDataState } from '../states/chatAtom'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { Link, useParams } from 'react-router-dom'
-import userData from '../assets/data/userData.json'
 import { format } from 'date-fns'
+import userData from '../assets/data/userData.json'
 
 export const Chatting = () => {
   const { id } = useParams()
