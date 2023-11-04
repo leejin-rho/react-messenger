@@ -23,8 +23,8 @@ export const ChatList = ({ searchValue }: { searchValue: string }) => {
 
   //채팅 목록에서 18글자가 넘어가면 ...표시 되도록
   const editContent = (content: String) => {
-    if (content.length >= 18) {
-      return content.substring(0, 18) + '...'
+    if (content.length >= 14) {
+      return content.substring(0, 14) + '...'
     } else return content
   }
 
@@ -96,7 +96,7 @@ const ChatBox = styled.div`
 `
 const InfoBox = styled.div`
   display: flex;
-  width: 18rem;
+  width: 16.5rem;
   height: 3.75rem;
   align-items: center;
 `
