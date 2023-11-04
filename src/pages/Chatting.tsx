@@ -141,7 +141,7 @@ export const Chatting = () => {
               index === arr.length - 1 ||
               format(new Date(chat.time), 'hh:mm') !== format(new Date(arr[index + 1].time), 'hh:mm') ||
               chat.from !== arr[index + 1].from
-            //만약 그 전 채팅시간과 같다면 그 전 채팅시간이 사라지고 첫 채팅에만 프로필
+            //만약 그 전 채팅시간과 같다면 첫 채팅에만 프로필, 이후에는 프로필 없도록
             const showProfile: boolean =
               index === 0 ||
               format(new Date(chat.time), 'hh:mm') !== format(new Date(arr[index - 1]?.time), 'hh:mm') ||
@@ -153,6 +153,7 @@ export const Chatting = () => {
             return chat.from === user ? (
               <>
                 {chatDate !== prevChatDate && (
+                  //다음 날에 채팅을 보낼 경우 날짜를 표시
                   <NextDayBox>
                     <NextDay>{chatDate}</NextDay>
                   </NextDayBox>
