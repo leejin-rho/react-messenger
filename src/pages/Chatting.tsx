@@ -161,7 +161,7 @@ export const Chatting = () => {
                   <MyChatContainer>
                     <ChattingBox1>{chat.content}</ChattingBox1>
                   </MyChatContainer>
-                  {showTime ? <ChatTime>{format(new Date(chat.time), 'hh:mm')}</ChatTime> : null}
+                  {showTime ? <ChatTime>{format(new Date(chat.time), 'hh:mm aa')}</ChatTime> : null}
                 </MyChatList>
               </>
             ) : (
