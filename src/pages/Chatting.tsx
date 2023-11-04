@@ -283,11 +283,13 @@ const GreenCircle = styled.div`
 const BackIcon = styled.img`
   width: 24px;
   height: 24px;
+  cursor: pointer;
 `
 
 const DotsIcon = styled.img`
   width: 24px;
   height: 24px;
+  cursor: pointer;
 `
 const BottomBox = styled.div`
   display: flex;
@@ -437,6 +439,7 @@ const InputContainer = styled.form`
 const PlusIcon = styled.img`
   height: 28px;
   width: 28px;
+  cursor: pointer;
 `
 
 const InputBox = styled.input`
@@ -464,6 +467,7 @@ const InputBox = styled.input`
 const AirplainIcon = styled.img`
   height: 24px;
   width: 24px;
+  cursor: pointer;
 `
 const NextDayBox = styled.div`
   width: 100%;

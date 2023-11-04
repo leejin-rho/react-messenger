@@ -21,7 +21,7 @@ export const ChatList = ({ searchValue }: { searchValue: string }) => {
     }
   }, [])
 
-  //채팅 목록에서 18글자가 넘어가면 ...표시 되도록
+  //채팅 목록에서 14글자가 넘어가면 ...표시 되도록
   const editContent = (content: String) => {
     if (content.length >= 14) {
       return content.substring(0, 14) + '...'
