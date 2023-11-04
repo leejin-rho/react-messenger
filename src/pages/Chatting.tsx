@@ -470,7 +470,7 @@ const NextDayBox = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 1.5rem 0rem 1.5rem 0rem;
+  margin: 1.2rem 0rem 1.5rem 0rem;
 `
 const NextDay = styled.span`
   width: fit-content;
