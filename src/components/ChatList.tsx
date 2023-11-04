@@ -65,7 +65,7 @@ export const ChatList = ({ searchValue }: { searchValue: string }) => {
                         new Date(chatData[user.uid]?.chat?.[chatData[user.uid]?.chat.length - 1]?.time),
                         'yyyy/MM/dd',
                       )
-                      ? 'hh:mm'
+                      ? 'hh:mm aa'
                       : 'MM/dd',
                   ) || ''}
                 </ChatTime>

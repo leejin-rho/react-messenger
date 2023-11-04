@@ -178,7 +178,7 @@ export const Chatting = () => {
                     {showProfile ? <FriendName>{nowChatting}</FriendName> : null}
                     <ChattingBox2>{chat.content}</ChattingBox2>
                   </FriendChatContainer>
-                  {showTime ? <ChatTime>{format(new Date(chat.time), 'hh:mm')}</ChatTime> : null}
+                  {showTime ? <ChatTime>{format(new Date(chat.time), 'hh:mm aa')}</ChatTime> : null}
                 </FriendChatList>
               </FriendContainer>
             )
